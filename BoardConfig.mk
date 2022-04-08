@@ -48,3 +48,6 @@ BOARD_KERNEL_CMDLINE += androidboot.dtbo_idx=12
 
 # Kernel
 TARGET_KERNEL_CONFIG := lineageos_taimen_defconfig
+
+# TWRP
+TARGET_PREBUILT_RECOVERY_RAMDISK_IMG := device/google/taimen/twrp-ramdisk
