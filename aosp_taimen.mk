@@ -18,22 +18,38 @@
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base_telephony.mk)
 
+# All components inherited here go to system_ext image
+$(call inherit-product, $(SRC_TARGET_DIR)/product/handheld_system_ext.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/telephony_system_ext.mk)
 
+# All components inherited here go to vendor image
+$(call inherit-product, $(SRC_TARGET_DIR)/product/handheld_vendor.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/telephony_vendor.mk)
+
+# Boot animation
+TARGET_SCREEN_HEIGHT := 2880
+TARGET_SCREEN_WIDTH := 1440
+
+# Inherit device configuration
 $(call inherit-product, device/google/taimen/device.mk)
-$(call inherit-product-if-exists, vendor/google_devices/taimen/proprietary/device-vendor.mk)
 
-PRODUCT_PACKAGES += \
-    vndk_package
+-include device/google/taimen/device-lineage.mk
 
-PRODUCT_COPY_FILES += \
-    device/google/taimen/audio_effects.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_effects.xml
+WITH_DEXPREOPT_BOOT_IMG_AND_SYSTEM_SERVER_ONLY := true
+WITH_GMS := true
 
-PRODUCT_RESTRICT_VENDOR_FILES := owner
-
-PRODUCT_PACKAGES += com.android.vndk.current.on_vendor
-
+## Device identifier. This must come after all inclusions
 PRODUCT_MANUFACTURER := Google
-PRODUCT_BRAND := Android
 PRODUCT_NAME := aosp_taimen
+PRODUCT_BRAND := google
 PRODUCT_DEVICE := taimen
-PRODUCT_MODEL := AOSP on taimen
+PRODUCT_MODEL := Pixel 2 XL
+PRODUCT_RESTRICT_VENDOR_FILES := false
+
+PRODUCT_BUILD_PROP_OVERRIDES += \
+    PRODUCT_NAME=taimen \
+    PRIVATE_BUILD_DESC="taimen-user 11 RP1A.201005.004.A1 6934943 release-keys"
+
+BUILD_FINGERPRINT := google/taimen/taimen:11/RP1A.201005.004.A1/6934943:user/release-keys
+
+$(call inherit-product, vendor/google/taimen/taimen-vendor.mk)
