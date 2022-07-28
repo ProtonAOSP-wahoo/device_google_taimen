@@ -15,4 +15,9 @@
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/aosp_taimen.mk
+    $(LOCAL_DIR)/xdroid_taimen.mk
+    
+COMMON_LUNCH_CHOICES := \
+    xdroid_taimen-user \
+    xdroid_taimen-userdebug \
+    xdroid_taimen-eng
